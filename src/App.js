@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+// import api from "./services/api";
 
-function App() {
+export default function App() {
+
+  const [ set, setSet ] = useState([])
+
+  useEffect(() =>{
+    fetch('http://3.88.110.25:3000')
+      .then(response => response.json())
+      .then(data => {
+        setSet(data);
+      })
+  },[])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ul>
+      {set.map(set => {
+        return (
+          <li key={set.username}>
+            <strong>{set.username}</strong>
+          </li>
+        )
+      })}
+    </ul>
   );
 }
-
-export default App;

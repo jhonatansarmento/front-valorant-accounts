@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
 // import api from "./services/api";
+import useFetch from "./services/fetch";
 
 export default function App() {
 
-  const [ set, setSet ] = useState([])
+  const { loading, error, data } = useFetch('http://3.88.110.25:3000')
 
-  useEffect(() =>{
-    fetch('http://3.88.110.25:3000')
-      .then(response => response.json())
-      .then(data => {
-        setSet(data);
-      })
-  },[])
-
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error dsdasdasdas:(</p>
 
   return (
-    <ul>
-      {set.map(set => {
+    <div>
+      {data.map(data => {
         return (
-          <li key={set.username}>
-            <strong>{set.username}</strong>
-          </li>
+            <strong>{data.name}</strong>
         )
       })}
-    </ul>
+    </div>
   );
 }
